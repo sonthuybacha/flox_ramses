@@ -1,3 +1,17 @@
+#### create layers ####
+
+megalist <- list.files(paste(getwd(), "/Data", sep=""), full.names=TRUE)
+megalist <- megalist[-c(1:3, 100)]
+megalist <- megalist[-c(5,6,55,56)]
+myList <- list()
+
+for(i in 1:(length(megalist)/4)){
+  myList[[i]] <- megalist[c((4*i-3):(4*i))]
+}
+
+
+#### create reading functions ####
+
 myValues <- list()
 myDetails <- list()
 
@@ -18,15 +32,17 @@ for(i in 1:5){
   rownames(myDetails[[i]]) <- NULL
 }
 
+#### extra code ####
+
 # define the following
-p = NA
-calc = NA
-
-for(i in 1:5){
-  for(j in 1:nrow(myValues[[i]])){
-    myValues[[i]]$new[j] <- ((myValues[[i]][j,2]-myValues[[i]][j,5])/(as.numeric(myDetails[[i]][8,])*calc) - p*(myValues[[i]][j,2]-myValues[[i]][j,5])/(as.numeric(myDetails[[i]][8,])*calc))/
-      ((myValues[[i]][j,1]-myValues[[i]][j,4])/(as.numeric(myDetails[[i]][6,])*calc))
-  }
-}
-
-View(myValues[[1]])
+# p = NA
+# calc = NA
+# 
+# for(i in 1:5){
+#   for(j in 1:nrow(myValues[[i]])){
+#     myValues[[i]]$new[j] <- ((myValues[[i]][j,2]-myValues[[i]][j,5])/(as.numeric(myDetails[[i]][8,])*calc) - p*(myValues[[i]][j,2]-myValues[[i]][j,5])/(as.numeric(myDetails[[i]][8,])*calc))/
+#       ((myValues[[i]][j,1]-myValues[[i]][j,4])/(as.numeric(myDetails[[i]][6,])*calc))
+#   }
+# }
+# 
+# View(myValues[[1]])
