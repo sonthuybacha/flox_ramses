@@ -73,11 +73,11 @@ cal.full <- cleanUp(cal.full)
 
 for(i in 1:length(myList)){
   
-  result.fine <- data.frame(matrix(ncol = 6))
-  names(result.fine) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.fine.1", "result.fine.2")
+  result.fine <- data.frame(matrix(ncol = 7))
+  names(result.fine) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.fine.1", "result.fine.2", "wl")
   
-  result.full <- data.frame(matrix(ncol = 6))
-  names(result.full) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.full.1", "result.full.2")
+  result.full <- data.frame(matrix(ncol = 7))
+  names(result.full) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.full.1", "result.full.2", "wl")
   
   lsky.fine <- disect(myList[[i]][1])
   lsky.full <- disect(myList[[i]][2])
@@ -104,8 +104,10 @@ for(i in 1:length(myList)){
       
       result2 <- (lufrac-lskyfrac)/edfrac2
       result.fine[k,6] <- result2
+      
+      result.fine[k,7] <- cal.fine[k,1]
     }
-    write.csv(result.fine, file = paste(getwd(), "/Data/", "results_fine_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
+    write.csv(result.fine, file = paste(getwd(), "/Results/", "results_fine_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
   }
   
   # for full
@@ -128,8 +130,10 @@ for(i in 1:length(myList)){
 
       result2 <- (lufrac-lskyfrac)/edfrac2
       result.full[k,6] <- result2
+      
+      result.full[k,7] <- cal.full[k,1]
     }
-    write.csv(result.full, file = paste(getwd(), "/Data/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
+    write.csv(result.full, file = paste(getwd(), "/Results/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
   }
 }
 
