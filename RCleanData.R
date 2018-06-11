@@ -113,19 +113,19 @@ for(i in 1:length(myList)){
     for(k in 1:1024){
       lufrac <- (lu.full[[1]][[j]][k,2]-lu.full[[1]][[j]][k,5])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2])
       result.full[k,1] <- lufrac
-      
+
       lskyfrac <- ((p*(lsky.full[[1]][[j]][k,2]-lsky.full[[1]][[j]][k,5]))/(as.numeric(lsky.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
       result.full[k,2] <- lskyfrac
-      
+
       edfrac1 <- (lu.full[[1]][[j]][k,1]-lu.full[[1]][[j]][k,4])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_WR[us]=")+1,])*cal.full[k,3])
       result.full[k,3] <- edfrac1
-      
+
       edfrac2 <- (lu.full[[1]][[j]][k,3]-lu.full[[1]][[j]][k,4])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_WR[us]=")+1,])*cal.full[k,3])
       result.full[k,4] <- edfrac2
-      
+
       result1 <- (lufrac-lskyfrac)/edfrac1
       result.full[k,5] <- result1
-      
+
       result2 <- (lufrac-lskyfrac)/edfrac2
       result.full[k,6] <- result2
     }
