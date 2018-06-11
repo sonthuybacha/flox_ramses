@@ -9,28 +9,49 @@ for(i in 1:(length(megalist)/4)){
   myList[[i]] <- megalist[c((4*i-3):(4*i))]
 }
 
+#### create useful functions ####
 
-#### create reading functions ####
-
-myValues <- list()
-myDetails <- list()
-
-for(i in 1:5){
-  a <- (6*i-5)
-  myValues[[i]] <- read.csv("03_Lsky_F133403.CSV", sep = ";", skip = a, nrows = 5, header = F, stringsAsFactors = FALSE)
-  x <- myValues[[i]][,1]
-  myValues[[i]] <- as.data.frame(t(myValues[[i]][,-1]))
-  colnames(myValues[[i]]) <- x
-  myValues[[i]] <- myValues[[i]][-which(rowSums(is.na(myValues[[i]])) == ncol(myValues[[i]])),]
-  rownames(myValues[[i]]) <- NULL
+nLines <- function(file){
+  testcon <- file(file,open="r")
+  readsizeof <- 20000
+  nooflines <- 0
+  (while((linesread <- length(readLines(testcon,readsizeof))) > 0 )
+    nooflines <- nooflines+linesread )
+  close(testcon)
+  return(nooflines)
 }
 
-for(i in 1:5){
-  a <- (6*i-6)
-  myDetails[[i]] <- read.csv("03_Lsky_F133403.CSV", sep = ";", skip = a, nrows = 1, header = F, stringsAsFactors = FALSE)
-  myDetails[[i]] <- as.data.frame(t(myDetails[[i]]), stringsAsFactors = FALSE)
-  rownames(myDetails[[i]]) <- NULL
+disect <- function(file){
+  
+  myValues <- list()
+  myDetails <- list()
+  dim <- nLines(file)/6
+  
+  for(i in 1:dim){
+    a <- (6*i-5)
+    myValues[[i]] <- read.csv(file, sep = ";", skip = a, nrows = 5, header = F, stringsAsFactors = FALSE)
+    x <- myValues[[i]][,1]
+    myValues[[i]] <- as.data.frame(t(myValues[[i]][,-1]))
+    colnames(myValues[[i]]) <- x
+    myValues[[i]] <- myValues[[i]][-which(rowSums(is.na(myValues[[i]])) == ncol(myValues[[i]])),]
+    rownames(myValues[[i]]) <- NULL
+  }
+  
+  for(i in 1:dim){
+    a <- (6*i-6)
+    myDetails[[i]] <- read.csv(file, sep = ";", skip = a, nrows = 1, header = F, stringsAsFactors = FALSE)
+    myDetails[[i]] <- as.data.frame(t(myDetails[[i]]), stringsAsFactors = FALSE)
+    rownames(myDetails[[i]]) <- NULL
+  }
+  
+  result <- list(myValues, myDetails)
+  return(result)
 }
+
+#### create workflows per 4 main entries in megalist ####
+
+
+
 
 #### extra code ####
 
