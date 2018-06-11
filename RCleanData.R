@@ -85,7 +85,7 @@ for(i in 1:length(myList)){
   lu.full <- disect(myList[[i]][4])
   
   # for fine
-  for(j in 1:length(lu.fine[[1]])){
+  for(j in 1:min(c(length(lu.fine[[1]]), length(lsky.fine[[1]])))){
     for(k in 1:1024){
       lufrac <- (lu.fine[[1]][[j]][k,2]-lu.fine[[1]][[j]][k,5])/(as.numeric(lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.fine[k,2])
       result.fine[k,1] <- lufrac
@@ -109,7 +109,7 @@ for(i in 1:length(myList)){
   }
   
   # for full
-  for(j in 1:length(lu.full[[1]])){
+  for(j in 1:min(c(length(lu.full[[1]]), length(lsky.full[[1]])))){
     for(k in 1:1024){
       lufrac <- (lu.full[[1]][[j]][k,2]-lu.full[[1]][[j]][k,5])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2])
       result.full[k,1] <- lufrac
