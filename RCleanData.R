@@ -4,6 +4,7 @@ megalist <- list.files(paste(getwd(), "/Data", sep=""), full.names=TRUE)
 megalist <- megalist[-c(1:3, 100)]
 megalist <- megalist[-c(5,6,55,56)]
 myList <- list()
+p = 0.0245
 
 for(i in 1:(length(megalist)/4)){
   myList[[i]] <- megalist[c((4*i-3):(4*i))]
@@ -44,7 +45,7 @@ disect <- function(file){
     myValues[[i]] <- read.csv(file, sep = ";", skip = a, nrows = 5, header = F, stringsAsFactors = FALSE)
     x <- myValues[[i]][,1]
     myValues[[i]] <- as.data.frame(t(myValues[[i]][,-1]))
-    colames(myValues[[i]]) <- x
+    colnames(myValues[[i]]) <- x
     myValues[[i]] <- myValues[[i]][-which(rowSums(is.na(myValues[[i]])) == ncol(myValues[[i]])),]
     rownames(myValues[[i]]) <- NULL
   }
@@ -70,10 +71,67 @@ cal.full <- cleanUp(cal.full)
 
 #### create workflows per 4 main entries in megalist ####
 
-for(i in 1:length(myList[[1]])){
+for(i in 1:length(myList)){
   
+  result.fine <- data.frame(matrix(ncol = 6))
+  names(result.fine) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.fine.1", "result.fine.2")
+  
+  result.full <- data.frame(matrix(ncol = 6))
+  names(result.full) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.full.1", "result.full.2")
+  
+  lsky.fine <- disect(myList[[i]][1])
+  lsky.full <- disect(myList[[i]][2])
+  lu.fine <- disect(myList[[i]][3])
+  lu.full <- disect(myList[[i]][4])
+  
+  # for fine
+  for(j in 1:length(lu.fine[[1]])){
+    for(k in 1:1024){
+      lufrac <- (lu.fine[[1]][[j]][k,2]-lu.fine[[1]][[j]][k,5])/(as.numeric(lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.fine[k,2])
+      result.fine[k,1] <- lufrac
+      
+      lskyfrac <- ((p*(lsky.fine[[1]][[j]][k,2]-lsky.fine[[1]][[j]][k,5]))/(as.numeric(lsky.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.fine[k,2]))
+      result.fine[k,2] <- lskyfrac
+      
+      edfrac1 <- (lu.fine[[1]][[j]][k,1]-lu.fine[[1]][[j]][k,4])/(as.numeric(lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_WR[us]=")+1,])*cal.fine[k,3])
+      result.fine[k,3] <- edfrac1
+      
+      edfrac2 <- (lu.fine[[1]][[j]][k,3]-lu.fine[[1]][[j]][k,4])/(as.numeric(lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_WR[us]=")+1,])*cal.fine[k,3])
+      result.fine[k,4] <- edfrac2
+      
+      result1 <- (lufrac-lskyfrac)/edfrac1
+      result.fine[k,5] <- result1
+      
+      result2 <- (lufrac-lskyfrac)/edfrac2
+      result.fine[k,6] <- result2
+    }
+    write.csv(result.fine, file = paste(getwd(), "/Data/", "results_fine_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
+  }
+  
+  # for full
+  for(j in 1:length(lu.full[[1]])){
+    for(k in 1:1024){
+      lufrac <- (lu.full[[1]][[j]][k,2]-lu.full[[1]][[j]][k,5])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2])
+      result.full[k,1] <- lufrac
+      
+      lskyfrac <- ((p*(lsky.full[[1]][[j]][k,2]-lsky.full[[1]][[j]][k,5]))/(as.numeric(lsky.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
+      result.full[k,2] <- lskyfrac
+      
+      edfrac1 <- (lu.full[[1]][[j]][k,1]-lu.full[[1]][[j]][k,4])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_WR[us]=")+1,])*cal.full[k,3])
+      result.full[k,3] <- edfrac1
+      
+      edfrac2 <- (lu.full[[1]][[j]][k,3]-lu.full[[1]][[j]][k,4])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_WR[us]=")+1,])*cal.full[k,3])
+      result.full[k,4] <- edfrac2
+      
+      result1 <- (lufrac-lskyfrac)/edfrac1
+      result.full[k,5] <- result1
+      
+      result2 <- (lufrac-lskyfrac)/edfrac2
+      result.full[k,6] <- result2
+    }
+    write.csv(result.full, file = paste(getwd(), "/Data/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
+  }
 }
-
 
 # for calculations, use grep and find entry after relevant text to get values
 
@@ -83,11 +141,5 @@ for(i in 1:length(myList[[1]])){
 # p = NA
 # calc = NA
 # 
-# for(i in 1:5){
-#   for(j in 1:nrow(myValues[[i]])){
-#     myValues[[i]]$new[j] <- ((myValues[[i]][j,2]-myValues[[i]][j,5])/(as.numeric(myDetails[[i]][8,])*calc) - p*(myValues[[i]][j,2]-myValues[[i]][j,5])/(as.numeric(myDetails[[i]][8,])*calc))/
-#       ((myValues[[i]][j,1]-myValues[[i]][j,4])/(as.numeric(myDetails[[i]][6,])*calc))
-#   }
-# }
 # 
 # View(myValues[[1]])
