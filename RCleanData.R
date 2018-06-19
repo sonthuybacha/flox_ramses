@@ -78,7 +78,7 @@ cal.full <- cleanUp(cal.full)
 
 #### create workflows per 4 main entries in megalist ####
 
-for(i in 1:length(myList)){
+for(i in 1:1){
   
   result.fine <- data.frame(matrix(ncol = 7))
   names(result.fine) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.fine.1", "result.fine.2", "wl")
@@ -90,24 +90,44 @@ for(i in 1:length(myList)){
   
   lsky.fine <- disect(myList[[i]][1])
   lsky.full <- disect(myList[[i]][2])
+  lu.fine <- disect(myList[[i]][3])
+  lu.full <- disect(myList[[i]][4])
   
   if(i<length(myList)){
     lsky.fine2 <- disect(myList[[i+1]][1])
     lsky.full2 <- disect(myList[[i+1]][2])
+    
+    # test for fine
+    
+    orig.fine <- as.numeric(lu.fine[[2]][[2]][which(lu.fine[[2]][[1]] == "GPS_TIME_UTC=")+1,])
+    session.fine <- as.numeric(lsky.fine[[2]][[length(lsky.fine[[2]])]][which(lsky.fine[[2]][[1]] == "GPS_TIME_UTC=")+1,])
+    session.fine2 <- as.numeric(lsky.fine2[[2]][[2]][which(lsky.fine2[[2]][[1]] == "GPS_TIME_UTC=")+1,])
+    check.fine <- c(abs(orig.fine-session.fine), abs(orig.fine-session.fine2))
+    checkIndex.fine <- which(check.fine == min(check.fine))
+    
+    orig.full <- as.numeric(lu.full[[2]][[2]][which(lu.full[[2]][[1]] == "GPS_TIME_UTC=")+1,])
+    session.full <- as.numeric(lsky.full[[2]][[length(lsky.full[[2]])]][which(lsky.full[[2]][[1]] == "GPS_TIME_UTC=")+1,])
+    session.full2 <- as.numeric(lsky.full2[[2]][[2]][which(lsky.full2[[2]][[1]] == "GPS_TIME_UTC=")+1,])
+    check.full <- c(abs(orig.full-session.full), abs(orig.full-session.full2))
+    checkIndex.full <- which(check.full == min(check.full))
+    
+  } else {
+    checkIndex.fine <- 1
+    checkIndex.full <- 1
   }
     
-  lu.fine <- disect(myList[[i]][3])
-  lu.full <- disect(myList[[i]][4])
-  
   # for fine
   for(j in 1:min(c(length(lu.fine[[1]]), length(lsky.fine[[1]])))){
     for(k in 1:1024){
       lufrac <- (lu.fine[[1]][[j]][k,2]-lu.fine[[1]][[j]][k,5])/(as.numeric(lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.fine[k,2])
       result.fine[k,1] <- lufrac
       
-      # j here needs to be corrected to one particular index
+      if(checkIndex.fine == 1){
+        lskyfrac <- ((p*(lsky.fine[[1]][[length(lsky.fine[[2]])]][k,2]-lsky.fine[[1]][[length(lsky.fine[[2]])]][k,5]))/(as.numeric(lsky.fine[[2]][[length(lsky.fine[[2]])]][which(lsky.fine[[2]][[length(lsky.fine[[2]])]] == "IT_VEG[us]=")+1,])*cal.fine[k,2]))
+      } else if(checkIndex.fine == 2){
+        lskyfrac <- ((p*(lsky.fine2[[1]][[2]][k,2]-lsky.fine2[[1]][[2]][k,5]))/(as.numeric(lsky.fine2[[2]][[2]][which(lsky.fine2[[2]][[2]] == "IT_VEG[us]=")+1,])*cal.fine[k,2]))
+      }
       
-      lskyfrac <- ((p*(lsky.fine[[1]][[j]][k,2]-lsky.fine[[1]][[j]][k,5]))/(as.numeric(lsky.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.fine[k,2]))
       result.fine[k,2] <- lskyfrac
       
       edfrac1 <- (lu.fine[[1]][[j]][k,1]-lu.fine[[1]][[j]][k,4])/(as.numeric(lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_WR[us]=")+1,])*cal.fine[k,3])
@@ -133,8 +153,12 @@ for(i in 1:length(myList)){
       lufrac <- (lu.full[[1]][[j]][k,2]-lu.full[[1]][[j]][k,5])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2])
       result.full[k,1] <- lufrac
       
-      # j here needs to be corrected to one particular index
-
+      if(checkIndex.fine == 1){
+        lskyfrac <- ((p*(lsky.full[[1]][[length(lsky.full[[2]])]][k,2]-lsky.full[[1]][[length(lsky.full[[2]])]][k,5]))/(as.numeric(lsky.full[[2]][[length(lsky.full[[2]])]][which(lsky.full[[2]][[length(lsky.full[[2]])]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
+      } else if(checkIndex.fine == 2){
+        lskyfrac <- ((p*(lsky.full2[[1]][[2]][k,2]-lsky.full2[[1]][[2]][k,5]))/(as.numeric(lsky.full2[[2]][[2]][which(lsky.full2[[2]][[2]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
+      }
+      
       lskyfrac <- ((p*(lsky.full[[1]][[j]][k,2]-lsky.full[[1]][[j]][k,5]))/(as.numeric(lsky.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
       result.full[k,2] <- lskyfrac
 
@@ -152,7 +176,7 @@ for(i in 1:length(myList)){
       
       result.full[k,7] <- cal.full[k,1]
     }
-    write.csv(result.full, file = paste(getwd(), "/Results/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
+    # write.csv(result.full, file = paste(getwd(), "/Results/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
   }
 }
 
