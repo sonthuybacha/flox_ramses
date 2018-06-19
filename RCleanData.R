@@ -17,9 +17,6 @@ for(i in 1:(length(megalist)/4)){
   myList[[i]] <- megalist[c((4*i-3):(4*i))]
 }
 
-
-# sdfasdf
-
 #### create useful functions ####
 
 cleanUp <- function(y){
