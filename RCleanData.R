@@ -153,9 +153,9 @@ for(i in 1:1){
       lufrac <- (lu.full[[1]][[j]][k,2]-lu.full[[1]][[j]][k,5])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2])
       result.full[k,1] <- lufrac
       
-      if(checkIndex.fine == 1){
+      if(checkIndex.full == 1){
         lskyfrac <- ((p*(lsky.full[[1]][[length(lsky.full[[2]])]][k,2]-lsky.full[[1]][[length(lsky.full[[2]])]][k,5]))/(as.numeric(lsky.full[[2]][[length(lsky.full[[2]])]][which(lsky.full[[2]][[length(lsky.full[[2]])]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
-      } else if(checkIndex.fine == 2){
+      } else if(checkIndex.full == 2){
         lskyfrac <- ((p*(lsky.full2[[1]][[2]][k,2]-lsky.full2[[1]][[2]][k,5]))/(as.numeric(lsky.full2[[2]][[2]][which(lsky.full2[[2]][[2]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
       }
       
