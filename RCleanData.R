@@ -78,7 +78,7 @@ cal.full <- cleanUp(cal.full)
 
 #### create workflows per 4 main entries in megalist ####
 
-for(i in 1:1){
+for(i in 1:length(myList)){
   
   result.fine <- data.frame(matrix(ncol = 7))
   names(result.fine) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.fine.1", "result.fine.2", "wl")
