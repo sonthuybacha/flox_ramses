@@ -1,3 +1,10 @@
+#### new concept ####
+
+# use last lsky value or second lsky value of next session depending on what is better approx
+# use only one lsky per session, either last one recorded in current session or second one of next session depending on the abs(delta(t)) value
+# cannot use the next version of lsky for last session, because does not exist
+# add some if statements to direct decisions, add an if.exists above normal if statement
+
 #### create layers ####
 
 megalist <- list.files(paste(getwd(), "/Data", sep=""), full.names=TRUE)
@@ -79,8 +86,16 @@ for(i in 1:length(myList)){
   result.full <- data.frame(matrix(ncol = 7))
   names(result.full) <- c("LuFrac", "LskyFrac", "EdFrac1", "EdFrac2", "result.full.1", "result.full.2", "wl")
   
+  # can add new lsky possibilities here, but exception of last case
+  
   lsky.fine <- disect(myList[[i]][1])
   lsky.full <- disect(myList[[i]][2])
+  
+  if(i<length(myList)){
+    lsky.fine2 <- disect(myList[[i+1]][1])
+    lsky.full2 <- disect(myList[[i+1]][2])
+  }
+    
   lu.fine <- disect(myList[[i]][3])
   lu.full <- disect(myList[[i]][4])
   
@@ -89,6 +104,8 @@ for(i in 1:length(myList)){
     for(k in 1:1024){
       lufrac <- (lu.fine[[1]][[j]][k,2]-lu.fine[[1]][[j]][k,5])/(as.numeric(lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.fine[k,2])
       result.fine[k,1] <- lufrac
+      
+      # j here needs to be corrected to one particular index
       
       lskyfrac <- ((p*(lsky.fine[[1]][[j]][k,2]-lsky.fine[[1]][[j]][k,5]))/(as.numeric(lsky.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.fine[k,2]))
       result.fine[k,2] <- lskyfrac
@@ -115,6 +132,8 @@ for(i in 1:length(myList)){
     for(k in 1:1024){
       lufrac <- (lu.full[[1]][[j]][k,2]-lu.full[[1]][[j]][k,5])/(as.numeric(lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2])
       result.full[k,1] <- lufrac
+      
+      # j here needs to be corrected to one particular index
 
       lskyfrac <- ((p*(lsky.full[[1]][[j]][k,2]-lsky.full[[1]][[j]][k,5]))/(as.numeric(lsky.full[[2]][[j]][which(lu.full[[2]][[j]] == "IT_VEG[us]=")+1,])*cal.full[k,2]))
       result.full[k,2] <- lskyfrac
