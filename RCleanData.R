@@ -176,7 +176,7 @@ for(i in 1:1){
       
       result.full[k,7] <- cal.full[k,1]
     }
-    # write.csv(result.full, file = paste(getwd(), "/Results/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
+    write.csv(result.full, file = paste(getwd(), "/Results/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
   }
 }
 
