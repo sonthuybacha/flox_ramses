@@ -1,10 +1,3 @@
-#### new concept ####
-
-# use last lsky value or second lsky value of next session depending on what is better approx
-# use only one lsky per session, either last one recorded in current session or second one of next session depending on the abs(delta(t)) value
-# cannot use the next version of lsky for last session, because does not exist
-# add some if statements to direct decisions, add an if.exists above normal if statement
-
 #### create layers ####
 
 megalist <- list.files(paste(getwd(), "/Data", sep=""), full.names=TRUE)
@@ -179,14 +172,3 @@ for(i in 1:length(myList)){
     write.csv(result.full, file = paste(getwd(), "/Results/", "results_full_", i ,"_", j, ".csv", sep=""), row.names = FALSE)
   }
 }
-
-# for calculations, use grep and find entry after relevant text to get values
-
-#### extra code ####
-
-# define the following
-# p = NA
-# calc = NA
-# 
-# 
-# View(myValues[[1]])
