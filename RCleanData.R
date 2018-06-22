@@ -105,6 +105,8 @@ for(i in 1:length(myList)){
     check.fine <- c(abs(orig.fine-session.fine), abs(orig.fine-session.fine2))
     checkIndex.fine <- which(check.fine == min(check.fine))
     
+    # test for full
+    
     orig.full <- as.numeric(lu.full[[2]][[2]][which(lu.full[[2]][[1]] == "GPS_TIME_UTC=")+1,])
     session.full <- as.numeric(lsky.full[[2]][[length(lsky.full[[2]])]][which(lsky.full[[2]][[1]] == "GPS_TIME_UTC=")+1,])
     session.full2 <- as.numeric(lsky.full2[[2]][[2]][which(lsky.full2[[2]][[1]] == "GPS_TIME_UTC=")+1,])
