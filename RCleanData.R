@@ -86,7 +86,7 @@ for(i in 1:length(myList)){
   lu.fine <- disect(myList[[i]][3])
   lu.full <- disect(myList[[i]][4])
   
-  if(i<length(myList)){
+  if(i < length(myList)){
     lsky.fine2 <- disect(myList[[i+1]][1])
     lsky.full2 <- disect(myList[[i+1]][2])
     
