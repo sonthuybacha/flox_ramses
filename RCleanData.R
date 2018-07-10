@@ -1,4 +1,4 @@
-#### create layers ####
+#### create layers and source functions ####
 
 megalist <- list.files(paste(getwd(), "/Data", sep=""), full.names=TRUE)
 megalist <- megalist[-c(1:3, 100)]
@@ -10,56 +10,9 @@ for(i in 1:(length(megalist)/4)){
   myList[[i]] <- megalist[c((4*i-3):(4*i))]
 }
 
-#### create useful functions ####
-
-cleanUp <- function(y){
-  x <- y[,1]
-  y <- as.data.frame(t(y[,-1]))
-  colnames(y) <- x
-  rownames(y) <- NULL
-  if(length(which(rowSums(is.na(y)) > 0) > 0)) {
-    stop("error, please remove NA-filled rows and try again")
-  }
-  return(y)
-}
-
-nLines <- function(file){
-  testcon <- file(file,open="r")
-  readsizeof <- 20000
-  nooflines <- 0
-  while((linesread <- length(readLines(testcon,readsizeof))) > 0){
-    nooflines <- nooflines+linesread
-  }
-  close(testcon)
-  return(nooflines)
-}
-
-disect <- function(file){
-  
-  myValues <- list()
-  myDetails <- list()
-  dim <- nLines(file)/6
-  
-  for(i in 1:dim){
-    a <- (6*i-5)
-    myValues[[i]] <- read.csv(file, sep = ";", skip = a, nrows = 5, header = F, stringsAsFactors = FALSE)
-    x <- myValues[[i]][,1]
-    myValues[[i]] <- as.data.frame(t(myValues[[i]][,-1]))
-    colnames(myValues[[i]]) <- x
-    myValues[[i]] <- myValues[[i]][-which(rowSums(is.na(myValues[[i]])) == ncol(myValues[[i]])),]
-    rownames(myValues[[i]]) <- NULL
-  }
-  
-  for(i in 1:dim){
-    a <- (6*i-6)
-    myDetails[[i]] <- read.csv(file, sep = ";", skip = a, nrows = 1, header = F, stringsAsFactors = FALSE)
-    myDetails[[i]] <- as.data.frame(t(myDetails[[i]]), stringsAsFactors = FALSE)
-    rownames(myDetails[[i]]) <- NULL
-  }
-  
-  result <- list(myValues, myDetails)
-  return(result)
-}
+source("cleanup.R", encoding = "UTF-8")
+source("nLines.R", encoding = "UTF-8")
+source("disect.R", encoding = "UTF-8")
 
 #### create additional variables ####
 
