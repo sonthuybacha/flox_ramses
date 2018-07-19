@@ -1,6 +1,6 @@
 #### create layers and source functions ####
 
-megalist <- list.files(paste(getwd(), "/Data", sep=""), full.names=TRUE)
+megalist <- list.files(paste(getwd(), "/data", sep=""), full.names=TRUE)
 megalist <- megalist[-c(1:3, 100)]
 megalist <- megalist[-c(5,6,55,56)]
 myList <- list()
@@ -18,21 +18,15 @@ source("disect.R", encoding = "UTF-8")
 
 #### create additional variables ####
 
-cal.fine <- read.csv(paste(getwd(),"/Data/00_CAL_Fine.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
+cal.fine <- read.csv(paste(getwd(),"/data/00_CAL_Fine.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
 cal.fine <- cleanUp(cal.fine)
 
-cal.full <- read.csv(paste(getwd(),"/Data/00_CAL_Full.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
+cal.full <- read.csv(paste(getwd(),"/data/00_CAL_Full.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
 cal.full <- cleanUp(cal.full)
 
 #### create workflows per 4 main entries in megalist ####
 
 pb.overall <- txtProgressBar(min = 0, max = length(myList), initial = 0, char = "=",
-                             width = NA, title, label, style = 3, file = "")
-
-pb.fine <- txtProgressBar(min = 0, max = length(myList), initial = 0, char = "=",
-                             width = NA, title, label, style = 3, file = "")
-
-pb.full <- txtProgressBar(min = 0, max = length(myList), initial = 0, char = "=",
                              width = NA, title, label, style = 3, file = "")
 
 start.time <- Sys.time()
@@ -190,5 +184,5 @@ aggregate.full <- do.call("rbind", lapply(final.results.full, function(x) return
 aggregate.fine <- aggregate.fine[c(8:11,7,1:6)]
 aggregate.full <- aggregate.full[c(8:11,7,1:6)]
 
-write.csv(aggregate.fine, "./Results/aggregateFine.csv")
-write.csv(aggregate.full, "./Results/aggregateFull.csv")
+write.csv(aggregate.fine, "./results/aggregateFine.csv")
+write.csv(aggregate.full, "./results/aggregateFull.csv")
