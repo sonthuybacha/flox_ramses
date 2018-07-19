@@ -190,5 +190,5 @@ aggregate.full <- do.call("rbind", lapply(final.results.full, function(x) return
 aggregate.fine <- aggregate.fine[c(12,13,8:11,7,1:6)]
 aggregate.full <- aggregate.full[c(12,13,8:11,7,1:6)]
 
-write.csv(aggregate.fine, "./results/aggregateFine.csv")
-write.csv(aggregate.full, "./results/aggregateFull.csv")
+write.csv(aggregate.fine, "./results/aggregateFine.csv", row.names = FALSE)
+write.csv(aggregate.full, "./results/aggregateFull.csv", row.names = FALSE)
