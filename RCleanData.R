@@ -1,7 +1,7 @@
 #### create layers and source functions ####
 
 megalist <- list.files(paste(getwd(), "/data", sep=""), full.names=TRUE)
-megalist <- megalist[-c(1:3, 100)]
+megalist <- megalist[-c(1:3,100)]
 megalist <- megalist[-c(5,6,55,56)]
 myList <- list()
 final.results.fine <- list()
