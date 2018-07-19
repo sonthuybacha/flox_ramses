@@ -12,7 +12,7 @@ for(i in 1:(length(megalist)/4)){
   myList[[i]] <- megalist[c((4*i-3):(4*i))]
 }
 
-source("cleanup.R", encoding = "UTF-8")
+source("cleanUp.R", encoding = "UTF-8")
 source("nLines.R", encoding = "UTF-8")
 source("disect.R", encoding = "UTF-8")
 
