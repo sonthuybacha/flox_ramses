@@ -172,7 +172,7 @@ for(i in 1:length(myList)){
   setTxtProgressBar(pb.overall, i, title = NULL, label = NULL)
 }
 end.time <- Sys.time()
-paste("Running time of ", gsub("Time difference of", "", end.time - start.time), "s", sep = "")
+end.time - start.time
 close(pb.overall)
 
 # aggregate lists and write them
