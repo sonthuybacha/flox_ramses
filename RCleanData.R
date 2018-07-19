@@ -33,11 +33,11 @@ start.time <- Sys.time()
 
 for(i in 1:length(myList)){
   
-  result.fine <- data.frame(matrix(ncol = 11))
-  names(result.fine) <- c("luFrac", "lskyFrac", "edFrac1", "edFrac2", "result.fine.1", "result.fine.2", "wl", "date", "time", "lat", "lon")
+  result.fine <- data.frame(matrix(ncol = 13))
+  names(result.fine) <- c("luFrac", "lskyFrac", "edFrac1", "edFrac2", "result.fine.1", "result.fine.2", "wl", "date", "time", "lat", "lon", "i", "j")
   
-  result.full <- data.frame(matrix(ncol = 11))
-  names(result.full) <- c("luFrac", "lskyFrac", "edFrac1", "edFrac2", "result.full.1", "result.full.2", "wl", "date", "time", "lat", "lon")
+  result.full <- data.frame(matrix(ncol = 13))
+  names(result.full) <- c("luFrac", "lskyFrac", "edFrac1", "edFrac2", "result.full.1", "result.full.2", "wl", "date", "time", "lat", "lon", "i", "j")
   
   # can add new lsky possibilities here, but exception of last case
   
@@ -115,6 +115,9 @@ for(i in 1:length(myList)){
       
       lon <- lu.fine[[2]][[j]][which(lu.fine[[2]][[j]] == "GPS_lon=")+1,]
       result.fine[k,11] <- lon
+      
+      result.fine[k,12] <- i
+      result.fine[k,13] <- j
     }
     m = j + w
     final.results.fine[[m]] <- result.fine
@@ -164,6 +167,9 @@ for(i in 1:length(myList)){
       
       lon <- lu.full[[2]][[j]][which(lu.full[[2]][[j]] == "GPS_lon=")+1,]
       result.full[k,11] <- lon
+      
+      result.full[k,12] <- i
+      result.full[k,13] <- j
     }
     m = j + w
     final.results.full[[m]] <- result.full
@@ -181,8 +187,8 @@ aggregate.fine <- do.call("rbind", lapply(final.results.fine, function(x) return
 
 aggregate.full <- do.call("rbind", lapply(final.results.full, function(x) return(x)))
 
-aggregate.fine <- aggregate.fine[c(8:11,7,1:6)]
-aggregate.full <- aggregate.full[c(8:11,7,1:6)]
+aggregate.fine <- aggregate.fine[c(12,13,8:11,7,1:6)]
+aggregate.full <- aggregate.full[c(12,13,8:11,7,1:6)]
 
 write.csv(aggregate.fine, "./results/aggregateFine.csv")
 write.csv(aggregate.full, "./results/aggregateFull.csv")
