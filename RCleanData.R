@@ -184,7 +184,6 @@ close(pb.overall)
 # aggregate lists and write them
 
 aggregate.fine <- do.call("rbind", lapply(final.results.fine, function(x) return(x)))
-
 aggregate.full <- do.call("rbind", lapply(final.results.full, function(x) return(x)))
 
 aggregate.fine <- aggregate.fine[c(12,13,8:11,7,1:6)]
