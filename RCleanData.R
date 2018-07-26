@@ -27,7 +27,7 @@ cal.full <- cleanUp(cal.full)
 #### create workflows per 4 main entries in megalist ####
 
 pb.overall <- txtProgressBar(min = 0, max = length(myList), initial = 0, char = "=",
-                             width = NA, title, label, style = 3, file = "")
+                             width = options()$width, style = 3, file = "")
 
 start.time <- Sys.time()
 
