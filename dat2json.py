@@ -16,6 +16,8 @@ def convertJSON(infile,outfile="out"):
     # initialize variables
     json_dict = {}
     data = False
+    # find total lines in file for tqdm bar
+    # adapted from https://stackoverflow.com/a/55188797
     num_lines = np.sum([1 for line in open("./data/ramses/"+infile,"r")])
     # start readings lines and sequentially parsing
     with open("./data/ramses/"+infile,"r") as f:
