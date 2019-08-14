@@ -1,6 +1,12 @@
-## flexFlox
+## flox_ramses
 
 A joint project to organize and calculate key remote sensing output metrics. Input data was collected during field-work and the next task involves filtering and calculating key optical coefficients.
+
+In order to use this repository for testing and submitting pull requests, it is advised to enable a pre-commit hook which keeps python dependencies in `requirements.txt` up-to-date.
+
+```shell
+$ ./init.sh
+```
 
 ### 1. Aggregating flox data
 
@@ -12,10 +18,22 @@ $ Rscript aggregate_flox.R
 
 The corresponding output will be saved in the `./out` directory.
 
-### 2. Parsing RAMSES data into json
+### 2. Parsing RAMSES data and writing to JSON
 
-Development underway :snail:
+The script `dat2json.py` parses a RAMSES text output file into a python dictionary and correspondingly writes it to the `./out` directory as a JSON file.
 
-## Authors
+```
+usage: dat2json.py [-h] [--out OUT] -i INPUT
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --out OUT             name of output json <default:'out'>
+
+required named arguments:
+  -i INPUT, --input INPUT
+                        name of input file, eg. 'ramses.dat'
+```
+
+### Authors
 
 Atreya Shankar, Remika Gupana
