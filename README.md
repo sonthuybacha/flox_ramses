@@ -1,13 +1,21 @@
-# flexFlox
+## flexFlox
 
-A joint project to organize and calculate key remote sensing data using R. Input data was collected during field-work and the next task involves filtering and calculating key optical coefficients.
+A joint project to organize and calculate key remote sensing output metrics. Input data was collected during field-work and the next task involves filtering and calculating key optical coefficients.
 
-So far these are our branches:
+### 1. Aggregating flox data
 
-1. `modified.branch` has the latest methodologies to handle data but is considered experimental. 
+In order to aggregate raw flox data into a csv file, place the relevant flox data inside `./data/flox` and execute the following:
 
-2. `master` has been previously tested and considered stable.
+```shell
+$ Rscript aggregate_flox.R
+```
 
-<img src="https://user-images.githubusercontent.com/35427332/41260901-afb552c6-6dd9-11e8-9389-fcb9bf21942a.jpg" width="500">
+The corresponding output will be saved in the `./out` directory.
 
-Authors: Atreya Shankar, Remika Gupana
+### 2. Parsing RAMSES data into json
+
+Development underway :snail:
+
+## Authors
+
+Atreya Shankar, Remika Gupana
