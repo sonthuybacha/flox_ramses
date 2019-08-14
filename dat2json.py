@@ -20,21 +20,25 @@ def convertJSON(infile,outfile="out"):
     # start readings lines and sequentially parsing
     with open("./data/ramses/"+infile,"r") as f:
         for line in tqdm(f,total=num_lines):
-            # boolean to create new json branch
             if len(re.findall("IDData\s+", line)) == 1:
+                # trigger to create new tree branch
                 el = re.split("\s*=\s*",line.strip())
                 json_dict[el[1]] = {}
                 reserve = el[1]
             elif "=" in line and "Version" not in line:
+                # trigger to add leaves
                 el = re.split("\s*=\s*",line.strip())
                 json_dict[reserve][el[0]] = el[1]
             elif "[END]" not in line and "[DATA]" in line:
+                # trigger to create data branch and accumulate intermediate list
                 data = True
                 int_ls = []
             elif "[END]" in line and "[DATA]" in line:
+                # trigger to stop accumulation and deposit list
                 data = False
                 json_dict[reserve]["data"] = int_ls  
             elif data:
+                # trigger to append data lines to intermediate list
                 int_ls.append(re.split("\s+",line.strip()))
     # write parsed dictionary to json
     with open("./out/"+outfile+".json", "w") as f:
