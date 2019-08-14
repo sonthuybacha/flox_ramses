@@ -14,6 +14,7 @@ source("./aux/disect.R", encoding = "UTF-8")
 # create source functions
 ###########################
 
+# note: subjective to most recent run
 megalist <- list.files(paste(getwd(), "/data/flox", sep=""), full.names=TRUE)
 megalist <- megalist[-c(1:3)]
 megalist <- megalist[-c(5,6,55,56)]
@@ -29,9 +30,9 @@ for(i in 1:(length(megalist)/4)){
 # create variables
 ###########################
 
-cal.fine <- read.csv(paste(getwd(),"/data/00_CAL_Fine.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
+cal.fine <- read.csv(paste(getwd(),"/data/flox/00_CAL_Fine.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
 cal.fine <- cleanUp(cal.fine)
-cal.full <- read.csv(paste(getwd(),"/data/00_CAL_Full.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
+cal.full <- read.csv(paste(getwd(),"/data/flox/00_CAL_Full.csv", sep=""), sep = ";", header = F, stringsAsFactors = FALSE)
 cal.full <- cleanUp(cal.full)
 
 ###########################
@@ -158,5 +159,5 @@ aggregate.full <- do.call("rbind", lapply(final.results.full, function(x) return
 aggregate.fine <- aggregate.fine[c(12,13,8:11,7,1:6)]
 aggregate.full <- aggregate.full[c(12,13,8:11,7,1:6)]
 # write to file
-write.csv(aggregate.fine, "./results/aggregateFine.csv", row.names = FALSE)
-write.csv(aggregate.full, "./results/aggregateFull.csv", row.names = FALSE)
+write.csv(aggregate.fine, "./out/aggregateFine.csv", row.names = FALSE)
+write.csv(aggregate.full, "./out/aggregateFull.csv", row.names = FALSE)
