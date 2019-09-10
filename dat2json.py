@@ -8,9 +8,9 @@ import argparse
 import numpy as np
 from tqdm import tqdm
 
-########################
+##############################
 # define main function
-########################
+##############################
 
 def convertJSON(infile,outfile="out"):
     # initialize variables
@@ -45,7 +45,7 @@ def convertJSON(infile,outfile="out"):
     # write parsed dictionary to json
     with open("./out/"+outfile+".json", "w") as f:
         json.dump(json_dict,f)
-        
+
 ##############################
 # main command call
 ##############################

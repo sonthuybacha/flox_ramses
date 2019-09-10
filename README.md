@@ -34,6 +34,10 @@ required named arguments:
                         name of input file, eg. 'ramses.dat'
 ```
 
+### 3. Visualization of Pond-based results
+
+`vis.R` contains a workflow to plot pond-based results after preprocessing a json file from `dat2json.py`.
+
 ### Authors
 
 Atreya Shankar, Remika Gupana
