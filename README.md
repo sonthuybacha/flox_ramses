@@ -36,7 +36,9 @@ required named arguments:
 
 ### 3. Visualization of pond-based results
 
-`vis.R` contains a workflow to plot pond-based results after preprocessing a json file from `dat2json.py`.
+`figure_vis.R` contains a workflow to plot pond-based results after preprocessing a json file from `dat2json.py`.
+
+`temporal_slice_vis.R` contains a workflow to plot pond-based results after preprocessing based on temporal slices.
 
 ### Authors
 
