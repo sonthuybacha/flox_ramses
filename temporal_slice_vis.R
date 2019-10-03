@@ -32,7 +32,6 @@ hold[,2] <- chron(times = gsub(".*\\s+","",hold[,2]))
 store <- hold[which(hold[,3] >= 630 & hold[,3] <= 750),]
 any(store[which(store[,1] == "SAM_8623"),2]-store[which(store[,1] == "SAM_8622"),2] > "00:02:00")
 any(store[which(store[,1] == "SAM_8624"),2]-store[which(store[,1] == "SAM_8622"),2] > "00:02:00")
-# TODO: run loop to check wavelengths are largely aligned within threshold of 3 nm
 any(abs(store[which(store[,1] == "SAM_8623"),3]-store[which(store[,1] == "SAM_8622"),3]) > 3)
 any(abs(store[which(store[,1] == "SAM_8624"),3]-store[which(store[,1] == "SAM_8622"),3]) > 3)
 
