@@ -9,8 +9,6 @@ library(extrafont)
 # read bulk data into memory
 ################################
 
-# TODO: adjust python scripts to be called via command line and parse all days
-# TODO: loop over all days to combine into single data frame and then plot
 # read in file and prepare for processing
 hold <- read.csv("./out/sample_20190710.csv",stringsAsFactors = FALSE,header = FALSE)
 # hold <- read.csv("./out/sample.csv",stringsAsFactors = FALSE,header = FALSE)
@@ -20,23 +18,18 @@ hold <- hold[which(hold[,4] != "NaN"),]
 names(hold) <- c("Pond","DateTime","Wavelength","Intensity")
 hold[,2] <- chron(times = gsub(".*\\s+","",hold[,2]))
 # remove anomalous data points due to human error
-# TODO: only needs to be done in some days and not always
 # temporary fix for 20190716
 # hold <- hold[which(hold[,2] != "12:14:16" & hold[,2] != "13:44:16"),]
 # temporary fix for 20190710
-hold <- hold[which(hold[,2] != "10:59:20" & hold[,2] != "11:05:50" &
-                   hold[,2] != "10:59:22"),]
+# hold <- hold[which(hold[,2] != "10:59:20" & hold[,2] != "11:05:50" & hold[,2] != "10:59:22"),]
 
 ################################
 # perform sanity alignment check
 ################################
 
-# TODO: run automated alignment check and optimization to find best alignment
 # minimize amount of data lost while creating alignment
 # get necessary wavelengths which will form x-axis
 store <- hold[which(hold[,3] >= 630 & hold[,3] <= 750),]
-# TODO: run loop check to ensure all time frames are aligned within 2 minutes
-# TODO: design script that can make necessary changes based on errors
 any(store[which(store[,1] == "SAM_8623"),2]-store[which(store[,1] == "SAM_8622"),2] > "00:02:00")
 any(store[which(store[,1] == "SAM_8624"),2]-store[which(store[,1] == "SAM_8622"),2] > "00:02:00")
 # TODO: run loop to check wavelengths are largely aligned within threshold of 3 nm
@@ -63,7 +56,6 @@ rel[which(rel[,1] == "SAM_8623"),4] <- rel[which(rel[,1] == "SAM_8623"),4]/rel[w
 rel[which(rel[,1] == "SAM_8624"),4] <- rel[which(rel[,1] == "SAM_8624"),4]/rel[which(rel[,2] == noon_closest_8624 & rel[,1] == "SAM_8624"),4]
 names(rel)[4] <- "Factor"
 rel[,2] <- as.character(rel[,2])
-# TODO: bin timeslots to have consistency across plots and show variation within bins
 
 ################################
 # bin timeslots and plot

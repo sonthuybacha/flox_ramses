@@ -40,6 +40,10 @@ required named arguments:
 
 `temporal_slice_vis.R` contains a workflow to plot pond-based results after preprocessing based on temporal slices.
 
+### 4. Changelog
+
+Proposed changes to our workflow are highlighted in `todos.md`.
+
 ### Authors
 
 Atreya Shankar, Remika Gupana
